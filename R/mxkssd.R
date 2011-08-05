@@ -1,9 +1,8 @@
 #m=number of factors
 #n=number of runs
-#level_vec=a vector of order k containing the levels of factors such that (n-1) factors have these levels.
-#for example a design with 2^7,3^14 with 8 runs will have level_vec=c(2,3,3) so that 7 factors each having levels 2, 3 and 3 respectively.
+#level_vec=a vector of order k containing the levels of factors such that number of factors having these levels are same.
+#for example a design with 2^7,3^14 will have level_vec=c(2,3,3) so that 7 factors each having levels 2, 3 and 3 respectively.
 #D is the supersaturated design
-
 
 genvec=function(m,n,level_vec,k)
 #The function created initial k-circulant q-level SSD randomly.
@@ -190,9 +189,9 @@ D
 
 mxkssd=function(m,n,level_vec,k,mef)
 {
-#The function tries to obtain efficient mixed-level supersaturated design that has efficiency more than 'mef' by interchanging factors of the generator vector. Here, first position of
+#The function tries to obtain efficient multilevel supersaturated design that has efficiency more than 'mef' by interchanging factors of the generator vector. Here, first position of
 #the generator vector is interchanges with most important factor, then second position with most important factor and so on.
-#After full iteration, design may not have E(fNOD) efficiency 1. In that case recall the function. mef is the minimum efficiency required, should be between 0 to 1.
+#After full iteration, design may not have chisquare efficiency 1. In that case recall the function. mef is the minimum efficiency required, should be between 0 to 1.
 	#time of execution
 	stime=proc.time()
 	L_fNOD=LB_fNOD(m,n,level_vec,k)
@@ -212,7 +211,8 @@ mxkssd=function(m,n,level_vec,k,mef)
 			outer_EfNOD=fNOD(D,m,n,level_vec,k)[[1]]
 			loop=0			
 			total=k*(n-1)*(n-2)/2
-			pb <- txtProgressBar(min = 0, max = total, style=3)	#progress bar variable			
+			pb <- txtProgressBar(min = 0, max = total, style=3)	#progress bar variable
+			#pb <- winProgressBar(min = 0, max = total)
 			i=1				
 			while (i<=(m-1) && (final_success==0))
 			{
@@ -225,7 +225,8 @@ mxkssd=function(m,n,level_vec,k,mef)
 				{
 					loop=loop+1 #loop is used for creating progress bar
 					Sys.sleep(0.1)
-   					setTxtProgressBar(pb, loop) #creates progress bar
+   					#setWinProgressBar(pb, loop) #creates progress bar
+					setTxtProgressBar(pb, loop) #creates progress bar
 					if (D[1,i]!=D[1,j])
 					{
 						D_temp=Design_swap(D,m,n,k,i,j)
@@ -256,6 +257,6 @@ mxkssd=function(m,n,level_vec,k,mef)
 	max_fNOD=fNOD(D,m,n,level_vec,k)[[2]]	
 	t_taken=proc.time()-stime  #t_taken is time taken to generate the design
 	genv=D[1,]
-	result=list(m,n,level_vec,k,genv,Deff,max_fNOD,t_taken, aliased)	
+	result=list(m=m,n=n,level_vector=level_vec,k=k,generator.vector=genv,design=D,EfNOD.efficiency=Deff,max.fNOD=max_fNOD,time.taken=t_taken, number.aliased.pairs=aliased)	
 	return(result)	
 }
