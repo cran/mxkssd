@@ -26,8 +26,8 @@
 	\item{k}{order of circulation}
 	\item{mef}{minimum efficiency required, should be between 0 to 1}
 	}
-\references{B. N. Mandal, V.K. Gupta and Rajender Parsad. (2011). Construction of Efficient mixed-level
-k-circulant Supersaturated Designs, Journal of Statistical Theory and Practice, September Issue}
+\references{B. N. Mandal, V. K. Gupta & Rajender Parsad (2011) Construction of Efficient Mixed-Level k-Circulant Supersaturated Designs, Journal of Statistical Theory and Practice, 5:4, 627-648, DOI: 10.1080/15598608.2011.10483735
+}
 \author{B N Mandal}
 \keyword{supersaturated design}
 \keyword{mixed-level}
@@ -38,4 +38,4 @@ k-circulant Supersaturated Designs, Journal of Statistical Theory and Practice, 
 #with 8 runs and 14 factors such that 7 factors have number of levels 2 and 
 #another 7 factors have number of levels 4. So the level_vec is c(2,4). 
 #The required minimum efficiency is 1.
-mxkssd(14,8,c(2,4),2,1)}
+\donttest{mxkssd(14,8,c(2,4),2,1)}}
